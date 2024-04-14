@@ -1,33 +1,36 @@
-package com.lcdh.workout.Persistencia.Impl;
+package com.lcdh.workout.Services;
 
 import com.lcdh.workout.Models.Usuario;
 import com.lcdh.workout.Repositories.UsuarioRepositorio;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-@Component
-public class ImplUsuarioDAO implements com.lcdh.workout.Persistencia.IUsuarioDAO {
-    @Autowired
+
+@Service
+public class UsuarioService {
+
     private UsuarioRepositorio usuarioRepositorio;
 
-    @Override
+    public UsuarioService(UsuarioRepositorio usuarioRepositorio) {
+        this.usuarioRepositorio = usuarioRepositorio;
+    }
+
     public List<Usuario> findAll() {
         return usuarioRepositorio.findAll();
     }
 
-    @Override
+
     public Optional<Usuario> findById(Long id) {
         return usuarioRepositorio.findById(id);
     }
 
-    @Override
+
     public void save(Usuario usuario) {
         usuarioRepositorio.save(usuario);
     }
 
-    @Override
+
     public void deleteById(Long id) {
         usuarioRepositorio.deleteById(id);
     }

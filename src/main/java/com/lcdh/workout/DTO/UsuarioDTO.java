@@ -1,4 +1,4 @@
-package com.lcdh.workout.Controllers.DTO;
+package com.lcdh.workout.DTO;
 
 import lombok.*;
 
