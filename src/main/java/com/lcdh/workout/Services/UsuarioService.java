@@ -1,5 +1,6 @@
 package com.lcdh.workout.Services;
 
+import com.lcdh.workout.DTO.UsuarioDTO;
 import com.lcdh.workout.Models.Usuario;
 import com.lcdh.workout.Repositories.UsuarioRepositorio;
 import org.springframework.stereotype.Service;
@@ -34,4 +35,6 @@ public class UsuarioService {
     public void deleteById(Long id) {
         usuarioRepositorio.deleteById(id);
     }
+
+
 }

@@ -3,6 +3,9 @@ package com.lcdh.workout.Controllers;
 import com.lcdh.workout.DTO.UsuarioDTO;
 import com.lcdh.workout.Models.Usuario;
 import com.lcdh.workout.Services.UsuarioService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +15,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/api/usr")
 public class UsuarioController {
    private UsuarioService usuarioService;
@@ -55,9 +58,12 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioDTOList);
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody UsuarioDTO usuarioDTO) throws URISyntaxException {
-        if (usuarioDTO.getNombre().isEmpty() || usuarioDTO.getApellido() != null || usuarioDTO.getEdad() != null) {
+
+
+    @PostMapping ("/save")
+
+    public ResponseEntity<?> save(@Valid @RequestBody UsuarioDTO usuarioDTO) throws URISyntaxException {
+        if (usuarioDTO !=null) {
             usuarioService.save(Usuario.builder().nombre(usuarioDTO.getNombre()).apellido(usuarioDTO.getApellido())
                     .edad((usuarioDTO.getEdad())).tiempoCarrera(usuarioDTO.getTiempoCarrera()
                     ).lagartijas(usuarioDTO.getLagartijas()).dominadas(usuarioDTO.getDominadas()).build());
@@ -72,7 +78,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<?> update(@Valid @PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
         Optional<Usuario> optionalUsuario = usuarioService.findById(id);
 
         if (optionalUsuario.isPresent()) {
@@ -91,16 +97,26 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable Long id) {
-        if (id != null) {
+    public ResponseEntity<?> delete( @PathVariable Long id) {
+        Optional<Usuario> optionalUsuario = usuarioService.findById(id);
+
+        if (optionalUsuario.isPresent()){
+        usuarioService.deleteById(id);
+        return ResponseEntity.ok("usuario eliminado");
+        }
+        else return ResponseEntity.notFound().build();
+    }
+
+    /*public ResponseEntity<?> deleteById( @PathVariable Long id) {
+
+        if (id !=null){
             usuarioService.deleteById(id);
             return ResponseEntity.ok("Usuario eliminado");
+
         }
+        return ResponseEntity.notFound().build();
 
-        else return ResponseEntity.notFound().build();
-
-
-    }
+    }*/
 
 
 }

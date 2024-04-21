@@ -26,10 +26,14 @@ public class Usuario  {
     @Column
     private String edad;
     @Column
-    private BigDecimal tiempoCarrera;
+    private Double tiempoCarrera;
     @Column
     private int dominadas;
     @Column
     private int lagartijas;
+    @Column
+    private String direccion;
+    @Column
+    private String numTelefono;
 
 }
